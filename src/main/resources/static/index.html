@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>navent Pedidos</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+</head>
+<body>
+
+    <form id="searchForm">
+        <input type="text" placeholder="Escribe tu nombre" name="nombre" required autofocus title="Ingresa tu nombre porfavor">
+        <input type="number" placeholder="Escribe tu monto" name="monto" required autofocus title="Ingresa tu monto porfavor">
+        <input type="number" placeholder="Escribe tu descuento" name="descuento" autofocus>
+        <input type="hidden" name="idPedido" value="0">
+        <input type="submit" value="Search">
+    </form>
+    <br>
+    <hr>
+    <div id="result"></div>
+</body>
+<script>
+    $( "#searchForm" ).submit(function( event ) {
+        event.preventDefault();
+
+        var requestData = JSON.stringify({
+            // idPedido no se deberia enviar, pero para poder probar, es necesario pasar un valor,
+            idPedido: parseInt($("[name='idPedido']", $(this)).val() , 10),
+            nombre: $("[name='nombre']", $(this)).val(),
+            monto: parseInt( $("[name='monto']", $(this)).val(), 10),
+            descuento: parseInt( $("[name='descuento']", $(this)).val(), 10)
+        });
+
+        $.ajax({
+            url: "/pedidos/guardar",
+            data: requestData,
+            dataType: "json",
+            type: "POST",
+            contentType: "application/json",
+            success: function( result ) {
+                $( "#result" ).empty().append( result.responseText );
+            },
+            error: function ( error) {
+                $( "#result" ).empty().append( error.responseText );
+
+            }
+        });
+    });
+</script>
+</html>
