@@ -1,5 +1,4 @@
-# navent-test
-
+# orders-system-practice
 
 Suponiendo que la tabla Pedidos tiene muchos registros y columnas (algunas de ellas
 nullable, algunas BLOB / "binary-large-object"), que consideraciones se deberían tener en
